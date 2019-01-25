@@ -37,6 +37,9 @@ We have build small use-cases around this where we are doing mutations and queri
 Make sure you are having a mongo db server running on local since we are using mongodb as our backend.
 Just start the mongoDB server, server will wait for connections on port 28017. The Graph QL code which we have built will make a connection to port 28017. Make sure you are having database named coelinks created in the mongodb server. Within this database, our code will work with tables links, users and votes.
 
+## Code Structure
+![Code Structure](https://drive.google.com/open?id=1JAMf2iZRKO0mJYhAxEg1iOo6q-DlHZ4M)
+
 ## Building the project
 Use the following command to build the project.
 ```
