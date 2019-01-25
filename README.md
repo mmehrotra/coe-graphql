@@ -133,6 +133,39 @@ mutation createLink {
 }
 ```
 
+***Request 2*** Mutation for creating votes
+```
+mutation createVote{
+		createVote(
+      linkId: "5c18b740033ba437344c8af1",
+      userId: "5c18b28c033ba41bd0fc2482")
+  {
+			createdAt
+			link {url}
+      user {name}
+			
+	}
+}  
+```
+***Response 2***
+```
+{
+  "data": {
+    "createVote": {
+      "createdAt": "2019-01-25T02:54:30.31Z",
+      "link": {
+        "url": "mohit.sss"
+      },
+      "user": {
+        "name": "mohit"
+      }
+    }
+  }
+}
+```
+
+
+
 ### G) Queries for querying links (QUERY SAMPLE)
 ***Request 1***
 ```
