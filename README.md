@@ -9,21 +9,59 @@ This is the graphQL sample reference code built for the COE. In this code we are
 </dependency>
 <dependency>
     <groupId>com.graphql-java</groupId>
+    <artifactId>graphql-java-tools</artifactId>
+    <version>3.2.0</version>
+</dependency>
+<dependency>
+    <groupId>com.graphql-java</groupId>
     <artifactId>graphql-java-servlet</artifactId>
     <version>4.0.0</version>
-    </dependency>
+</dependency>
+<dependency>
+    <groupId>javax.servlet</groupId>
+    <artifactId>javax.servlet-api</artifactId>
+    <version>3.0.1</version>
+    <scope>provided</scope>
+</dependency>
 ```        
 ## PreRequisites
-## MongoDB Server
-Make sure you are having a mongo db server running on local. Just start the mongoDB server, server will wait for connections on port 28017. The Graph QL code will make a connection to port 28017. Make sure you are having database named coelinks created in the mongodb server
+## Our use case 
+We are dealing with 3 entities
+- Users
+- Links
+- Votes
+User can create some links where link entity has attributes such as description and link_url. A user can also vote on the particular link. 
+We have build small use-cases around this where we are doing mutations and queries on the data-set.
 
+## MongoDB Server
+Make sure you are having a mongo db server running on local since we are using mongodb as our backend.
+Just start the mongoDB server, server will wait for connections on port 28017. The Graph QL code which we have built will make a connection to port 28017. Make sure you are having database named coelinks created in the mongodb server. Within this database, our code will work with tables links, users and votes.
+
+## Building the project
+Use the following command to build the project.
+```
+mvn clean install
+```
 
 ## Running the Project
-Run the project by the following mvn command by going into the folder .../graphql-java-master where the pom.xml is located
+Run the project by the following mvn command by going into the folder .../graphql-java-master where the pom.xml is located. This will leverage the in-built jetty server to run our garpah ql server.
  ```    
 mvn jetty:run 
  ```    
-This will run the graph QL server on port 8080. 
+This will run the graph QL server on port 8080.
+We have enabled this by adding the below mentioned lines into our pom.xml
+```
+<build>
+    <finalName>hackernews</finalName>
+    <plugins>
+        <plugin>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-maven-plugin</artifactId>
+            <version>9.4.6.v20170531</version>
+        </plugin>
+    </plugins>
+</build>
+```
 
 
 ## GraphiQL URLS and other details
@@ -36,8 +74,8 @@ http://localhost:8080/
 
 ## STEPS OF EXECUTION
 
-### A)
-Comment out the following code in the path com.graphql.coe.GraphQLEndPoint (Line number 64-73)
+### A) Disabling the Authorization for creation of Admin Account
+Comment out the following code in the path ***com.graphql.coe.GraphQLEndPoint (Line number 64-73)***. We are doing this to first disable the authorization process to create a user. Ideally there should have been admin configured who is authorized to do this, but here for simplicity we are getting over with this workaround.
 ```
 	/*@Override
     protected GraphQLContext createContext(Optional<HttpServletRequest> request, Optional<HttpServletResponse> response) {
@@ -112,7 +150,7 @@ Change the Authorization code with the token recieved in the previous step. Also
    
    
 ### F) Queries for creating links (MUTATION SAMPLES)
-***Request 1***
+***Request 1 For creating links***
 ```
 mutation createLink {
 	createLink(url: "mohit.sss", description: "my first link"){
@@ -121,7 +159,7 @@ mutation createLink {
 	}
 }
 ```
-***Response 1***
+***Response 1 for creating links***
 ```
 {
   "data": {
@@ -133,7 +171,7 @@ mutation createLink {
 }
 ```
 
-***Request 2*** Mutation for creating votes
+***Request 2 Mutation for creating votes***
 ```
 mutation createVote{
 		createVote(
@@ -147,7 +185,7 @@ mutation createVote{
 	}
 }  
 ```
-***Response 2***
+***Response 2 for creating votes***
 ```
 {
   "data": {
@@ -163,11 +201,11 @@ mutation createVote{
   }
 }
 ```
-
+***CREATE more such records through mutations to play around.***
 
 
 ### G) Queries for querying links (QUERY SAMPLE)
-***Request 1***
+***Request 1 Normal query returning id, url and description***
 ```
 query allLinks {
 	allLinks{
@@ -177,7 +215,7 @@ query allLinks {
 	}
 }
 ```
-***Response 1***
+***Response 1  Normal query returning id, url and description***
 ```
 {
   "data": {
@@ -196,7 +234,7 @@ query allLinks {
   }
 }
 ```
-***Request 2***
+***Request 2  Normal query returning id, url, description and posted by***
 ```
 query allLinks {
 	allLinks{
@@ -209,7 +247,7 @@ query allLinks {
 	}
 }
 ```
-***Response 2***
+***Response 2 Normal query returning id, url, description and posted by***
 ```
 {
   "data": {
@@ -234,7 +272,7 @@ query allLinks {
   }
 }
 ```
-***Request 3***
+***Request 3 Returning first 2 links***
 ```
 query allLinks {
 		allLinks(first:2){
@@ -247,7 +285,7 @@ query allLinks {
 	}
 	}
 ```
-***Response 3***
+***Response 3 Returning first 2 links***
 ```
 {
   "data": {
@@ -272,7 +310,7 @@ query allLinks {
   }
 }
 ```
-***Request 4***
+***Request 4 Employing filter on url***
 ```
 query allLinks {
 		allLinks(filter: {url_contains:"sss"}){
@@ -285,7 +323,7 @@ query allLinks {
 	}
 	}
 ```
-***Response 4***
+***Response 4 Employing filter on url***
 ```
 {
   "data": {
@@ -302,7 +340,7 @@ query allLinks {
   }
 }
 ```
-***Request 5***
+***Request 5 Employing filter on url and description***
 ```
 query allLinks {
 		allLinks(filter: {url_contains:"sss", description_contains:"first"}){
@@ -315,7 +353,7 @@ query allLinks {
 	}
 	}
 ```
-***Response 5***
+***Response 5 Employing filter on url and description***
 ```
 {
   "data": {
