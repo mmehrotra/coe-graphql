@@ -373,8 +373,100 @@ query allLinks {
   }
 }
 ```
-
-
-   
+***Request 6 Creation of the Customer with the help of REST API at the backend***
+```
+mutation createCustomer {
+	createCustomer(dob: "", emailId: "mark.twain@gmail.com", firstName: "Mark", lastName : "Twain", mobile: "123"){
+		id
+		firstName
+    dob
+	}
+}
+```
+***Response 6 Creation of the customer with the help of REST API at the backend***
+```
+{
+  "data": {
+    "createCustomer": {
+      "id": "1",
+      "firstName": "Mark",
+      "dob": ""
+    }
+  }
+}
+```
+***Request 7 Getting all the customers with the help of REST API at the backend***
+```
+query allCustomers {
+	allCustomers{
+		id
+		firstName		
+	}
+}
+```
+***Response 7 Getting all the customers with the help of REST API at the backend***
+```
+{
+  "data": {
+    "allCustomers": [
+      {
+        "id": "1",
+        "firstName": "Mark"
+      },
+      {
+        "id": "1",
+        "firstName": "Stephan"
+      }
+    ]
+  }
+}
+```
+***Request 8 Getting all the customers with the help of REST API at the backend based on the filter***
+```
+query allCustomers {
+	allCustomers(filter: {firstname_contains:"Mark", lastname_contains: "Tw"}){
+		id
+		firstName
+    lastName
+	}
+}
+```
+***Response 9 Getting all the customers with the help of REST API at the backend based on the filter***
+```
+{
+  "data": {
+    "allCustomers": [
+      {
+        "id": "1",
+        "firstName": "Mark",
+        "lastName": "Twain"
+      }
+    ]
+  }
+}
+```
+ ***Request 10 Getting a single customer from the backend REST API based on the customer id filter***
+ ```
+ query oneCustomer {
+	oneCustomer(filter: {customerId:"1"}){
+		id
+		firstName
+    lastName
+	}
+}
+```
+***Response 10 Getting a single customer from the backend REST API based on the customer id filter***
+```
+{
+  "data": {
+    "oneCustomer": {
+      "id": "1",
+      "firstName": "Mark",
+      "lastName": "Twain"
+    }
+  }
+}
+```
+ 
 	
 	
