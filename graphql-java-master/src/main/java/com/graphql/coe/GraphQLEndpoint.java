@@ -61,7 +61,7 @@ public class GraphQLEndpoint extends SimpleGraphQLServlet {
                 .makeExecutableSchema();
     }
 
-    @Override
+    /*@Override
     protected GraphQLContext createContext(Optional<HttpServletRequest> request, Optional<HttpServletResponse> response) {
         User user = request
                 .map(req -> req.getHeader("Authorization"))
@@ -70,7 +70,7 @@ public class GraphQLEndpoint extends SimpleGraphQLServlet {
                 .map(userRepository::findById)
                 .orElse(null);
         return new AuthContext(user, request, response);
-    }
+    }*/
 
     @Override
     protected List<GraphQLError> filterGraphQLErrors(List<GraphQLError> errors) {
